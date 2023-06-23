@@ -5,13 +5,13 @@ import '../App/App.css';
 const initialValues = {
 	weight: '',
 	height: '',
-	date: ''
-}
+	date: '',
+};
 
-const BmiForm = ({ change }) => {
+const BmiForm = ({ change,getValW,getValH,selectValueW, selectValueH }) => {
 	const [state, setState] = useState(initialValues);
 
-	const handleChange = e => {
+	const handleChange = (e) => {
 		let { value, name } = e.target;
 		if (value > 999) {
 			value = 999;
@@ -20,7 +20,9 @@ const BmiForm = ({ change }) => {
 		setState({
 			...state,
 			[name]: value,
-			date
+			date,
+			selectValueW,
+            selectValueH
 		});
 	};
 
@@ -33,7 +35,19 @@ const BmiForm = ({ change }) => {
 		<>
 			<div className="row">
 				<div className="col m6 s12">
-					<label htmlFor="weight">Weight (in kg)</label>
+					<div className="flx">
+						<label htmlFor="weight">Weight</label>
+						<select
+							value={selectValueW}
+							className="select"
+							onChange={getValW}
+						>
+							<option value="pounds" defaultValue="">
+								pounds
+							</option>
+							<option value="kilogram">kilograms</option>
+						</select>
+					</div>
 					<input
 						id="weight"
 						name="weight"
@@ -47,7 +61,19 @@ const BmiForm = ({ change }) => {
 				</div>
 
 				<div className="col m6 s12">
-					<label htmlFor="height">Height (in cm)</label>
+					<div className="flx">
+						<label htmlFor="height">Height</label>
+						<select
+							value={selectValueH}
+							className="select"
+							onChange={getValH}
+						>
+							<option value="inch">inches</option>
+							<option value="centimeter" defaultValue="">
+								centimeters
+							</option>
+						</select>
+					</div>
 					<input
 						id="height"
 						name="height"
@@ -76,7 +102,7 @@ const BmiForm = ({ change }) => {
 };
 
 BmiForm.propTypes = {
-	change: PropTypes.func.isRequired
+	change: PropTypes.func.isRequired,
 };
 
 export default BmiForm;
